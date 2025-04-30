@@ -1,0 +1,7 @@
+Para poder ejecutar el proyecto es necesario instalar
+las siguientes dependencias en orden
+
+*Node JS
+npm init-y
+npm install i express morgan cors
+npm i nodemon -D
