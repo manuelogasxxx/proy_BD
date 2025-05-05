@@ -2,9 +2,7 @@
 
 //inicio de sesión
 const pool = require('../config/db')
-const loginUser = async (req,res)=>{
-    console.log('aaa');
-};
+
 
 //método post
 const crearUsuario = async (req,res,next)=>{
@@ -22,7 +20,8 @@ const crearUsuario = async (req,res,next)=>{
     
 };
 
-const act_usuario = async (req,res,next)=>{
+//metodo put
+const actUsuario = async (req,res,next)=>{
     const {id} = req.params;
     const {username,contrasena,nombre, apellido_pat, apellido_mat} = req.body
 
@@ -40,9 +39,58 @@ const act_usuario = async (req,res,next)=>{
     }
 };
 
+//metodo get
+const loginUsuario= async(req,res,next)=>{
+    try {
+        const{ username, contrasena} = req.body;
+        const result = await pool.query(
+            'SELECT * FROM usuarios WHERE username=$1 AND contrasena=$2',
+            [username,contrasena]
+        );
+        if(result.rows.length ===0){
+            return res.status(401).json({message:"credenciales inválidas"})
+        }
+        res.json({ message: 'Inicio de sesión exitoso', user: result.rows[0] }); 
+    } catch (error) {
+        next(error);
+    }
+}
+
+//función para ver el usuario
+
+//metodo get
+const verUsuario= async(req,res,next)=>{
+    try {
+        const{id} = req.params;
+        const result = await pool.query('SELECT * FROM usuarios WHERE id_usuario=$1',[id]);
+        
+        if(result.rows.length ===0){
+            return res.status(404).json({message:"usuario no encontrado"})
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const borrarUsuario = async (req,res,next)=>{
+    try {
+        const {id} = req.params;
+        const result= await pool.query('DELETE FROM usuarios WHERE id_usuario=$1',[id]);
+        if(result.rowCount===0){
+            return res.status(404).json({message:"Usuario no encontrado"});
+        }
+        //todo fue bien y el servidor no regresa nada
+        return res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 
 module.exports = {
-    loginUser, crearUsuario, act_usuario
+    loginUsuario, crearUsuario, actUsuario,verUsuario,borrarUsuario
 }
 
 

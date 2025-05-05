@@ -1,15 +1,18 @@
 const {Router} = require('express');
-const {loginUser,crearUsuario,act_usuario} = require('../controllers/control_peticiones')
+const {loginUsuario,crearUsuario,actUsuario,verUsuario,borrarUsuario} = require('../controllers/control_peticiones')
 
 
 const router = Router();
 
-//prueba de solicitudes
-router.get('/',loginUser)
+
+//login
+router.get('/login',loginUsuario)
 
 //CRUD Usuarios
-router.post('/pruebita', crearUsuario);
-router.put('/pruebita1/:id',act_usuario)
+router.post('/pruebita', crearUsuario)
+router.put('/pruebita1/:id',actUsuario)
+router.get('/pruebita2/:id',verUsuario)
+router.delete('pruebita3/:id',borrarUsuario)
 
 
 
