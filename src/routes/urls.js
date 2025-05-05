@@ -1,17 +1,14 @@
 const {Router} = require('express');
-const pool = require('../config/db')
+const {loginUser,crearUsuario} = require('../controllers/control_peticiones')
+
+
 const router = Router();
 
 //prueba de solicitudes
-router.get('/', 
-    (req,res)=>{ res.send('jijija');
-})
+router.get('/',loginUser)
 
-router.get('/si', async(req,res)=>{
-    const result = await pool.query('SELECT NOW()');
-    console.log(result);
-    res.json('executed');
-})
+router.post('/pruebita', crearUsuario)
+
 
 //solicitudes del backend
 
