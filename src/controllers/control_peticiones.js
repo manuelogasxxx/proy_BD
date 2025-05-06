@@ -10,7 +10,7 @@ const crearUsuario = async (req,res,next)=>{
 
     try {
         const result = await pool.query(
-        "INSERT INTO usuarios (username,contrasena,nombre_usuario,apellido_pat_usuario, apellido_mat_usuario) VALUES ($1,$2,$3,$4,$5) RETURNING*",
+        "INSERT INTO usuarios (username,contrasena,nombre,apellido_p, apellido_m) VALUES ($1,$2,$3,$4,$5) RETURNING*",
         [username,contrasena,nombre, apellido_pat, apellido_mat]
         );
         res.json(result.rows[0]);    
@@ -27,7 +27,7 @@ const actUsuario = async (req,res,next)=>{
 
     try {
         const result = await pool.query(
-        "UPDATE usuarios SET username=$1,contrasena=$2,nombre_usuario=$3,apellido_pat_usuario=$4, apellido_mat_usuario=$5 WHERE id_usuario=$6  RETURNING*",
+        "UPDATE usuarios SET username=$1,contrasena=$2,nombre=$3,apellido_p=$4, apellido_m=$5 WHERE id_usuario=$6  RETURNING*",
         [username,contrasena,nombre, apellido_pat, apellido_mat,id]
         );
         if(result.rows.length ===0){
@@ -87,10 +87,34 @@ const borrarUsuario = async (req,res,next)=>{
     }
 }
 
+const crearInstitucion = async(req,res,next)=>{
+    const{id_usuario} = req.params;
+    const {nombre,fk_tipo_institucion} = req.body;
+    try {
+        const result = await pool.query(
+        "INSERT INTO instituciones (nombre,fk_tipo_institucion) VALUES ($1,$2) RETURNING*",
+        [nombre,fk_tipo_institucion]
+        );
+        //recupera el id de la institución creada
+        const id_institucion = result.rows[0].id_institucion;
+        //crea la relación
+        const result1 = await pool.query(
+            'INSERT INTO usuarios_instituciones (id_usuario,id_institucion) VALUES ($1,$2) RETURNING*',
+            [id_usuario,id_institucion]
+        );
+        await pool.query('COMMIT');
+        res.status(201).json({message: "institucion creada y relacion establexida",
+                            istitucionCreada: result.rows[0],
+                            relacionUsuarioInstitucion:result1.rows[0]});    
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        next(error);
+    } 
+};
 
 
 module.exports = {
-    loginUsuario, crearUsuario, actUsuario,verUsuario,borrarUsuario
+    loginUsuario, crearUsuario, actUsuario,verUsuario,borrarUsuario,crearInstitucion
 }
 
 
