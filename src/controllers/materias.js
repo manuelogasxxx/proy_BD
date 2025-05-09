@@ -69,7 +69,23 @@ const verMaterias= async(req,res,next)=>{
 }
 
 
-//ver materia singualarmente
+//ver materia singualarmente //puede que necesite cambiarla
+
+const verMateria = async (req,res,next)=>{
+    try {
+        const {id_materia} = req.params;
+        const result = await pool.query('SELECT nombre_materia,periodo,activa FROM materias WHERE id_materia=$1',
+            [id_materia]
+        )
+        if(result.rowCount ===0){
+            return res.status(404).json({message:"materia no encontrada"})
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        next(error)
+    }
+
+}
 
 
 
@@ -81,5 +97,5 @@ const verMaterias= async(req,res,next)=>{
 
 
 module.exports ={
-    crearMateria, actMateria, borrarMateria,verMaterias
+    crearMateria, actMateria, borrarMateria,verMaterias,verMateria
 };
