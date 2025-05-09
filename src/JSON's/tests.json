@@ -1,8 +1,19 @@
-{
-    "username": "manolin3z ",
-    "contrasena":" aaaaaaa123",
-    "nombre": "Ulises", 
-    "apellido_pat" :"fernandez", 
-    "apellido_mat" : "mercado"
-}
+[
+    {
+        "username": "manolin3z ",
+        "contrasena":" aaaaaaa123",
+        "nombre": "Ulises", 
+        "apellido_pat" :"fernandez", 
+        "apellido_mat" : "mercado"
+    },
+    {
+        "nombre_materia": "Matemáticas",
+        "Periodo":"Otoño 2025"
+    },
+    {
+        "nombre_materia": "Matemáticas Discretas",
+        "periodo":"Otoño 2026",
+        "activa": true
+    }
 
+]

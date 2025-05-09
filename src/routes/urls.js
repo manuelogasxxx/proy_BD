@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const {loginUsuario,crearUsuario,actUsuario,verUsuario,borrarUsuario,crearInstitucion} = require('../controllers/control_peticiones');
 const {crearInst,verInstUser} = require('../controllers/instituciones');
+const {crearMateria,borrarMateria,actMateria,verMaterias} = require('../controllers/materias');
 
 const router = Router();
 
@@ -18,8 +19,11 @@ router.delete('/pruebita3/:id',borrarUsuario)
 router.post('/crearInst/:id_usuario',crearInst)
 router.get('/verInst/:id_usuario', verInstUser)
 
-
-
+//CRUD de materias
+router.post('/crearMat/:id_inst',crearMateria)
+router.put('/actMat/:id_materia',actMateria)
+router.delete('/borrarMat/:id_materia',borrarMateria)
+router.get('/verMaterias/:id_usuario',verMaterias)
 //solicitudes del backend
 
 
