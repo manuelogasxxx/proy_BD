@@ -7,7 +7,7 @@ const router = Router();
 
 
 //login
-router.get('/login',loginUsuario)
+router.post('/login',loginUsuario)
 
 //CRUD Usuarios
 router.post('/pruebita', crearUsuario)

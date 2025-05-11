@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import '../formularios.css'
+import styles from '../formularios.module.css'
 import { useNavigate } from "react-router-dom";
 export const Formulario =()=>{
     const navigate = useNavigate();
@@ -7,87 +7,99 @@ export const Formulario =()=>{
 
     const onSubmit = handleSubmit((data)=>{
         console.log(data);
-        navigate('/');
+        navigate('/instituciones');
     })
     return(
         <div>
-            <h2>Registro de usuarios</h2>
+            <div>
+                <h2>Registro de usuarios</h2>
+            </div>
+            
             <form onSubmit={onSubmit}>
-                <label htmlfor="usuario">usuario</label>
-                <input 
-                    type="text"
-                    {...register("usuario",{
-                        required:{
-                            value: true,
-                            message: "usuario es requerido"
-                        },
-                        minLength:{
-                            value: 4,
-                            message: "usuario debe tener al menos 4 caracteres"
-                        },
-                        maxLength:{
-                            value: 16,
-                            message: "usuario debe tener máximo 16 caracteres"
-                        }
-                    })}
-                />
-                {
-                    errors.usuario && <span> {errors.usuario.message}</span>
-                }
+                <div>
+                    <label htmlfor="usuario">usuario</label>
+                    <input 
+                        type="text"
+                        {...register("usuario",{
+                            required:{
+                                value: true,
+                                message: "usuario es requerido"
+                            },
+                            minLength:{
+                                value: 4,
+                                message: "usuario debe tener al menos 4 caracteres"
+                            },
+                            maxLength:{
+                                value: 16,
+                                message: "usuario debe tener máximo 16 caracteres"
+                            }
+                        })}
+                    />
+                    {
+                        errors.usuario && <span> {errors.usuario.message}</span>
+                    }
+                </div>
                 
-                <label htmlfor="contraseña">contraseña</label>
-                <input 
-                    type="password"
-                    {...register("contrasena",{
-                        required:{
-                            value: true,
-                            message: "contraseña es requerida"
-                        },
-                        minLength:{
-                            value: 8,
-                            message: "contraseña debe tener al menos 8 caracteres"
-                        },
-                        maxLength:{
-                            value: 16,
-                            message: "contraseña debe tener máximo 16 caracteres"
-                        }
-                    })}
-                />
-                {
-                    errors.contrasena && <span> {errors.contrasena.message}</span>
-                }
-
-                <label htmlfor="confirmarContraseña">Confirmar contraseña</label>
-                <input 
-                    type="password"
-                    {...register("confirmarContrasena",{
-                        required:{
-                            value: true,
-                            message: "confirmar contraseña es requerida"
-                        },
-                        minLength:{
-                            value: 8,
-                            message: "contraseña debe tener al menos 8 caracteres"
-                        },
-                        maxLength:{
-                            value: 16,
-                            message: "contraseña debe tener máximo 16 caracteres"
-                        },
-                        validate: (value)=>{
-                            if(value === watch('contrasena')){
-                                return true;
+                <div>
+                    <label htmlfor="contraseña">contraseña</label>
+                    <input 
+                        type="password"
+                        {...register("contrasena",{
+                            required:{
+                                value: true,
+                                message: "contraseña es requerida"
+                            },
+                            minLength:{
+                                value: 8,
+                                message: "contraseña debe tener al menos 8 caracteres"
+                            },
+                            maxLength:{
+                                value: 16,
+                                message: "contraseña debe tener máximo 16 caracteres"
                             }
-                            else{
-                                return "las contraseñas no coincide"
+                        })}
+                    />
+                    {
+                        errors.contrasena && <span> {errors.contrasena.message}</span>
+                    }
+                </div>
+                
+                <div>
+                    <label htmlfor="confirmarContraseña">Confirmar contraseña</label>
+                    <input 
+                        type="password"
+                        {...register("confirmarContrasena",{
+                            required:{
+                                value: true,
+                                message: "confirmar contraseña es requerida"
+                            },
+                            minLength:{
+                                value: 8,
+                                message: "contraseña debe tener al menos 8 caracteres"
+                            },
+                            maxLength:{
+                                value: 16,
+                                message: "contraseña debe tener máximo 16 caracteres"
+                            },
+                            validate: (value)=>{
+                                if(value === watch('contrasena')){
+                                    return true;
+                                }
+                                else{
+                                    return "las contraseñas no coincide"
+                                }
                             }
-                        }
-                    })}
-                />
-                {
-                    errors.confirmarContrasena && <span> {errors.confirmarContrasena.message}</span>
-                }
+                        })}
+                    />
+                    {
+                        errors.confirmarContrasena && <span> {errors.confirmarContrasena.message}</span>
+                    }
+                </div>
+                
 
-                <label htmlfor="nombre">Nombre</label>
+                
+
+                <label htmlfor="nombre" className={styles.pruebita}>Nombre</label>
                 <input 
                     type="text"
                     {...register("nombre",{

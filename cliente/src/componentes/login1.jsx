@@ -1,69 +1,92 @@
 import {useForm} from "react-hook-form";
-import '../formularios.css'
+import styles from '../formularios.module.css'
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+
 
 
 export const Login=()=>{
     const navigate = useNavigate();
     const {register, handleSubmit,formState:{errors}} = useForm();
-    const onSubmit = handleSubmit((data)=>{  
+    const onSubmit = handleSubmit(async (data)=>{  
         console.log(data);
-        navigate('/');
+        try {
+            const res = await fetch('http://localhost:4000/login',{
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            if (!res.ok) throw new Error("Usuario o contraseña incorrectos");
+            navigate('/Instituciones');
+
+        } catch (error) {
+            alert(error.message)
+        }
     })
  
 
     return (
-        <div>
-            <h2>Inicio de sesión</h2>
+        <div className={styles.container}>
+            <div className={styles.fromgroup}>
+                <h2>Inicio de sesión</h2>
+            </div>
+            
             <form onSubmit={onSubmit}>
-                <label htmlfor="usuario">usuario</label>
-                <input 
-                    type="text"
-                    {...register("usuario",{
-                        required:{
-                            value: true,
-                            message: "usuario es requerido"
-                        },
-                        minLength:{
-                            value: 4,
-                            message: "usuario debe tener al menos 4 caracteres"
-                        },
-                        maxLength:{
-                            value: 16,
-                            message: "usuario debe tener máximo 16 caracteres"
-                        }
-                    })}
-                />
-                {
-                    errors.usuario && <span> {errors.usuario.message}</span>
-                }
+                <div className={styles.fromgroup}>
+                    <label htmlfor="username" className={styles.label}>usuario</label>
+                    <input 
+                        type="text"
+                        {...register("username",{
+                            required:{
+                                value: true,
+                                message: "usuario es requerido"
+                            },
+                            minLength:{
+                                value: 4,
+                                message: "usuario debe tener al menos 4 caracteres"
+                            },
+                            maxLength:{
+                                value: 16,
+                                message: "usuario debe tener máximo 16 caracteres"
+                            }
+                        })}
+                        className={styles.input}
+                    />
+                    {
+                        errors.usuario && <span className={styles.errorSpan}> {errors.usuario.message}</span>
+                    }
+
+                </div>
+
+                <div className={styles.fromgroup}>
+                    <label htmlfor="contrasena" className={styles.label}>contraseña</label>
+                    <input 
+                        type="password"
+                        {...register("contrasena",{
+                            required:{
+                                value: true,
+                                message: "contraseña es requerida"
+                            },
+                            minLength:{
+                                value: 8,
+                                message: "contraseña debe tener al menos 8 caracteres"
+                            },
+                            maxLength:{
+                                value: 16,
+                                message: "contraseña debe tener máximo 16 caracteres"
+                            }
+                        })}
+                        className={styles.input}
+                    />
+                    {
+                        errors.contrasena && <span className={styles.errorSpan}> {errors.contrasena.message}</span>
+                    }
+                </div>        
                 
-                <label htmlfor="contraseña">contraseña</label>
-                <input 
-                    type="password"
-                    {...register("contrasena",{
-                        required:{
-                            value: true,
-                            message: "contraseña es requerida"
-                        },
-                        minLength:{
-                            value: 8,
-                            message: "contraseña debe tener al menos 8 caracteres"
-                        },
-                        maxLength:{
-                            value: 16,
-                            message: "contraseña debe tener máximo 16 caracteres"
-                        }
-                    })}
-                />
-                {
-                    errors.contrasena && <span> {errors.contrasena.message}</span>
-                }
                 
                 
                 <Link to="/registro">¿registrar usuario?</Link>
-                <button type="submit">
+                <button type="submit" className={styles.button}>
                     enviar
                 </button>
             </form>
