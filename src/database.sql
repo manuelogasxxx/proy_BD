@@ -1,11 +1,12 @@
 CREATE TABLE usuarios(
     id_usuario SERIAL PRIMARY KEY,
     username VARCHAR(16) UNIQUE NOT NULL CHECK (char_length(username) >=4),
-    contrasena VARCHAR(16) NOT NULL,
+    contrasena VARCHAR(16) NOT NULL CHECK (char_lenght(contrasena)>=8),
     nombre VARCHAR(30) NOT NULL,
     apellido_p VARCHAR(30) NOT NULL,
     apellido_m VARCHAR(30), 
-    ultimo_login TIMESTAMP
+    ultimo_login TIMESTAMP,
+    UNIQUE (username)
 );
 
 CREATE TABLE tipo_institucion(
