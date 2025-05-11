@@ -1,12 +1,13 @@
 import {useForm} from "react-hook-form";
 import '../formularios.css'
+import { useNavigate } from "react-router-dom";
 export const Formulario =()=>{
+    const navigate = useNavigate();
     const {register, handleSubmit,formState:{errors},watch} = useForm();
 
     const onSubmit = handleSubmit((data)=>{
-        
-        
         console.log(data);
+        navigate('/');
     })
     return(
         <div>

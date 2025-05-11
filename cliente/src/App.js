@@ -1,11 +1,13 @@
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import Login from './componentes/login'
-import {Formulario} from './componentes/prueba'
+
+import {Formulario} from './componentes/crearUsuario'
+import {Login} from './componentes/login1'
 export default function App(){
   return(
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={< Formulario />}/> 
+        <Route path="/" element={< Login />}/>
+        <Route path="/registro" element={< Formulario />}/>  
       </Routes>
     </BrowserRouter>
   )
