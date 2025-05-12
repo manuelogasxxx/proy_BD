@@ -9,7 +9,7 @@ export const Login=()=>{
     const navigate = useNavigate();
     const {register, handleSubmit,formState:{errors}} = useForm();
     const onSubmit = handleSubmit(async (data)=>{  
-        console.log(data);
+        //console.log(data);
         try {
             const res = await fetch('http://localhost:4000/login',{
                 method: 'POST',
@@ -17,8 +17,13 @@ export const Login=()=>{
                 body: JSON.stringify(data),
             });
             if (!res.ok) throw new Error("Usuario o contraseña incorrectos");
-            sessionStorage.setItem('usuario', JSON.stringify(res.usuario));
-            navigate('/inicio');
+            else{
+                const result = await res.json();  
+                console.log(result)
+                sessionStorage.setItem('usuario', result.user.username);
+                sessionStorage.setItem('id_usuario', result.user.id_usuario);
+                navigate('/inicio');   
+            }
 
         } catch (error) {
             alert(error.message)
@@ -34,7 +39,7 @@ export const Login=()=>{
             
             <form onSubmit={onSubmit}>
                 <div className={styles.fromgroup}>
-                    <label htmlfor="username" className={styles.label}>usuario</label>
+                    <label htmlFor="username" className={styles.label}>usuario</label>
                     <input 
                         type="text"
                         {...register("username",{
@@ -60,7 +65,7 @@ export const Login=()=>{
                 </div>
 
                 <div className={styles.fromgroup}>
-                    <label htmlfor="contrasena" className={styles.label}>contraseña</label>
+                    <label htmlFor="contrasena" className={styles.label}>contraseña</label>
                     <input 
                         type="password"
                         {...register("contrasena",{

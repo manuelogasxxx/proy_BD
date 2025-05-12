@@ -1,6 +1,7 @@
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
-
+import RutaProtegida from './rutaProtegida'
 import {Formulario} from './componentes/crearUsuario'
+import { FormularioInstitucion } from './componentes/crearInstitucion'
 import {Login} from './componentes/login1'
 import { Instituciones } from './componentes/instituciones'
 import { Layout } from './componentes/layout'
@@ -13,9 +14,15 @@ export default function App(){
       <Routes>
         <Route path="/" element={< Login />}/> 
         <Route path="/registro" element={< Formulario />}/>
-        <Route path="/inicio" element={< Layout/>}>  
+        <Route path="/inicio" element={
+          <RutaProtegida>
+            < Layout/>
+          </RutaProtegida>
+          }>
+          <Route index element={<Instituciones/>}/>
           <Route path="instituciones" element={<Instituciones/>}/>
-          <Route path="pruebita" element={<Formulario/>}/>
+          <Route path="pruebita"  element={<Formulario/>}/>
+          <Route path="crearInstitucion" element={<FormularioInstitucion/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -62,9 +62,22 @@ const verInstUser= async(req,res,next)=>{
 }
 
 
-
+//función para traer los tipo de instutuciones
+const verTipoInst= async(req,res,next)=>{
+    try {
+        const {rows} = await pool.query('SELECT * FROM tipo_institucion',
+            );
+        
+        if(rows.length ===0){
+            return res.status(404).json({message:"Tipos de institucion  no encontrados"})
+        }
+        res.json(rows);
+    } catch (error) {
+        next(error);
+    }
+}
 
 
 module.exports = {
-    crearInst,verInstUser
+    crearInst,verInstUser,verTipoInst
 };

@@ -38,7 +38,7 @@ export const Formulario =()=>{
             
             <form onSubmit={onSubmit}>
                 <div>
-                    <label htmlfor="usuario">usuario</label>
+                    <label htmlFor="usuario">usuario</label>
                     <input 
                         type="text"
                         {...register("username",{
@@ -62,7 +62,7 @@ export const Formulario =()=>{
                 </div>
                 
                 <div>
-                    <label htmlfor="contraseña">contraseña</label>
+                    <label htmlFor="contraseña">contraseña</label>
                     <input 
                         type="password"
                         {...register("contrasena",{
@@ -86,7 +86,7 @@ export const Formulario =()=>{
                 </div>
                 
                 <div>
-                    <label htmlfor="confirmarContraseña">Confirmar contraseña</label>
+                    <label htmlFor="confirmarContraseña">Confirmar contraseña</label>
                     <input 
                         type="password"
                         {...register("confirmarContrasena",{
@@ -120,7 +120,7 @@ export const Formulario =()=>{
 
                 
 
-                <label htmlfor="nombre" className={styles.pruebita}>Nombre</label>
+                <label htmlFor="nombre" className={styles.pruebita}>Nombre</label>
                 <input 
                     type="text"
                     {...register("nombre",{
@@ -138,7 +138,7 @@ export const Formulario =()=>{
                     errors.nombre && <span> {errors.nombre.message}</span>
                 }
                 
-                <label htmlfor="apellido_p">Apellido paterno</label>
+                <label htmlFor="apellido_p">Apellido paterno</label>
                 <input 
                     type="text"
                     {...register("apellido_pat",{
@@ -156,7 +156,7 @@ export const Formulario =()=>{
                     errors.apellido_p && <span> {errors.apellido_p.message}</span>
                 }
 
-                <label htmlfor="apellido_m">Apellido materno</label>
+                <label htmlFor="apellido_m">Apellido materno</label>
                 <input 
                     type="text"
                     {...register("apellido_mat",{

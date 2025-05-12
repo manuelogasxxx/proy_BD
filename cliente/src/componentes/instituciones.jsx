@@ -8,11 +8,12 @@ export const Instituciones=()=>{
     <div>
         
         <header>
-            <Link to="/inicio">Home</Link>
-            <Link >info Usuaurio</Link>
-            <button> LogOut</button>
+            <Link to="instituciones">Home</Link>
+            <Link to ="crearInstitucion">CrearInstitucion</Link>  
         </header>
+        <div>
+            jijija
+        </div>
     </div> 
-          
     )
 }

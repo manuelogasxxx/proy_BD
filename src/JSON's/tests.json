@@ -7,6 +7,11 @@
         "apellido_mat" : "mercado"
     },
     {
+        "nombre":"",
+        "fk_tipo_institucion":""
+    }
+    ,
+    {
         "nombre_materia": "Matemáticas",
         "Periodo":"Otoño 2025"
     },

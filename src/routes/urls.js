@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const {loginUsuario,crearUsuario,actUsuario,verUsuario,borrarUsuario,crearInstitucion} = require('../controllers/control_peticiones');
-const {crearInst,verInstUser} = require('../controllers/instituciones');
+const {crearInst,verInstUser,verTipoInst} = require('../controllers/instituciones');
 const {crearMateria,borrarMateria,actMateria,verMaterias,verMateria} = require('../controllers/materias');
 
 const router = Router();
@@ -18,6 +18,8 @@ router.delete('/pruebita3/:id',borrarUsuario)
 //CRUD instituciones
 router.post('/crearInst/:id_usuario',crearInst)
 router.get('/verInst/:id_usuario', verInstUser)
+router.get('/verTipoInst',verTipoInst)
+
 
 //CRUD de materias
 router.post('/crearMat/:id_inst',crearMateria)
