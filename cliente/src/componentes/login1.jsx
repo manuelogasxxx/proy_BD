@@ -17,7 +17,8 @@ export const Login=()=>{
                 body: JSON.stringify(data),
             });
             if (!res.ok) throw new Error("Usuario o contraseña incorrectos");
-            navigate('/Instituciones');
+            sessionStorage.setItem('usuario', JSON.stringify(res.usuario));
+            navigate('/inicio');
 
         } catch (error) {
             alert(error.message)

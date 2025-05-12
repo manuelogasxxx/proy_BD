@@ -17,7 +17,6 @@ const crearUsuario = async (req,res,next)=>{
     } catch (error) {
         next(error)
     }
-    
 };
 
 //metodo put

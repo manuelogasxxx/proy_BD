@@ -10,7 +10,7 @@ const router = Router();
 router.post('/login',loginUsuario)
 
 //CRUD Usuarios
-router.post('/pruebita', crearUsuario)
+router.post('/crearUsuario', crearUsuario)
 router.put('/pruebita1/:id',actUsuario)
 router.get('/pruebita2/:id',verUsuario)
 router.delete('/pruebita3/:id',borrarUsuario)

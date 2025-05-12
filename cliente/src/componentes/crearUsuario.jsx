@@ -5,9 +5,30 @@ export const Formulario =()=>{
     const navigate = useNavigate();
     const {register, handleSubmit,formState:{errors},watch} = useForm();
 
-    const onSubmit = handleSubmit((data)=>{
+    const onSubmit = handleSubmit(async (data)=>{
         console.log(data);
-        navigate('/instituciones');
+        try {
+            const res = await fetch('http://localhost:4000/crearUsuario',{
+                method:'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username:data.username,
+                    contrasena: data.contrasena,
+                    nombre:data.nombre,
+                    apellido_pat:data.apellido_p,
+                    apellido_mat:data.apellido_m
+                })
+            });
+            if (!res.ok) {
+            // Si el estado no es OK (2xx), lanzar un error con el mensaje de la API
+            const errorData = await res.json(); // Intentar obtener el mensaje de error del cuerpo
+            throw new Error(errorData.message || 'Error al crear el usuario'); // Usar un mensaje genérico si no hay uno específico
+            }  
+            navigate('/');
+        } catch (error) {
+            alert(error.message)
+        }
+        
     })
     return(
         <div>
@@ -20,7 +41,7 @@ export const Formulario =()=>{
                     <label htmlfor="usuario">usuario</label>
                     <input 
                         type="text"
-                        {...register("usuario",{
+                        {...register("username",{
                             required:{
                                 value: true,
                                 message: "usuario es requerido"
@@ -120,7 +141,7 @@ export const Formulario =()=>{
                 <label htmlfor="apellido_p">Apellido paterno</label>
                 <input 
                     type="text"
-                    {...register("apellido_p",{
+                    {...register("apellido_pat",{
                         required:{
                             value: true,
                             message: "apellido paterno es requerido"
@@ -138,7 +159,7 @@ export const Formulario =()=>{
                 <label htmlfor="apellido_m">Apellido materno</label>
                 <input 
                     type="text"
-                    {...register("apellido_m",{
+                    {...register("apellido_mat",{
                         maxLength:{
                             value: 30,
                             message: "apellido materno debe tener máximo 30 caracteres"
