@@ -7,12 +7,13 @@ const pool = require('../config/db')
 //método post
 const crearUsuario = async (req,res,next)=>{
     const {username,contrasena,nombre, apellido_pat, apellido_mat} = req.body
-
+console.log('Datos recibidos:', { username, contrasena, nombre, apellido_pat, apellido_mat });
     try {
         const result = await pool.query(
         "INSERT INTO usuarios (username,contrasena,nombre,apellido_p, apellido_m) VALUES ($1,$2,$3,$4,$5) RETURNING*",
         [username,contrasena,nombre, apellido_pat, apellido_mat]
         );
+        console.log('Resultado de la consulta:', result.rows[0]);
         res.json(result.rows[0]);    
     } catch (error) {
         next(error)

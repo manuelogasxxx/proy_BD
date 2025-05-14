@@ -10,7 +10,7 @@ export const NavigationBar=()=> {
       <label>Bienvenido {usuario}</label>
       <div>
         <Link to="/inicio" style={{ margin: '0 10px', textDecoration: 'none' }}>Botón 1</Link>
-        <Link to="pruebita" style={{ margin: '0 10px', textDecoration: 'none' }}>Cuenta</Link>
+        <Link to="Usuario" style={{ margin: '0 10px', textDecoration: 'none' }}>Cuenta</Link>
         <button onClick={()=>{
             sessionStorage.clear();
             navigate('/');

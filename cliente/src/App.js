@@ -2,10 +2,12 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import RutaProtegida from './rutaProtegida'
 import {Formulario} from './componentes/crearUsuario'
 import { FormularioInstitucion } from './componentes/crearInstitucion'
+import { VerUsuario } from './componentes/actUsuario'
 import {Login} from './componentes/login1'
 import { Instituciones } from './componentes/instituciones'
 import { Layout } from './componentes/layout'
 import { NavigationBar } from './componentes/Navbar'
+import { Materias } from './componentes/materias'
 
 //existen rutas normales y rutas anidadas
 export default function App(){
@@ -21,8 +23,9 @@ export default function App(){
           }>
           <Route index element={<Instituciones/>}/>
           <Route path="instituciones" element={<Instituciones/>}/>
-          <Route path="pruebita"  element={<Formulario/>}/>
+          <Route path="Usuario"  element={<VerUsuario/>}/>
           <Route path="crearInstitucion" element={<FormularioInstitucion/>}/>
+          <Route path="materias" element={<Materias/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

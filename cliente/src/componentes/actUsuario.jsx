@@ -1,15 +1,50 @@
 import {useForm} from "react-hook-form";
 import styles from '../formularios.module.css'
 import { useNavigate } from "react-router-dom";
-export const Formulario =()=>{
+import { useState,useEffect } from "react";
+export const VerUsuario =()=>{
     const navigate = useNavigate();
-    const {register, handleSubmit,formState:{errors},watch} = useForm();
+    const {register, handleSubmit,formState:{errors},watch,setValue} = useForm();
+    const [usuarioAPI, setUsuarioAPI] = useState([]);
+    const [cargandoOpciones, setCargandoOpciones] = useState(true);
+
+    useEffect(() => {
+        const id = sessionStorage.getItem('id_usuario');
+        const cargarOpciones = async () => {
+          try {
+            const respuesta = await fetch(`http://localhost:4000/verUsuario/${id}`);
+            if (!respuesta.ok) {
+              throw new Error(`Error al cargar las opciones: ${respuesta.status}`);
+            }
+            const datos = await respuesta.json();
+            setUsuarioAPI(datos);
+            setCargandoOpciones(false);
+            //establecer los campos del formulario
+            setValue('username', datos.username);
+            setValue('contrasena', datos.contrasena);
+            setValue('nombre', datos.nombre);
+            setValue('apellido_pat', datos.apellido_p);
+            setValue('apellido_mat', datos.apellido_m);
+            console.log(datos)
+          } catch (error) {
+            console.error("Error al cargar las opciones de la API:", error);
+            //setErrorCargaOpciones(error.message);
+            setCargandoOpciones(false);
+          }
+        };
+        if(id){
+            cargarOpciones();
+        }
+      }, []);
 
     const onSubmit = handleSubmit(async (data)=>{
         console.log(data);
-        try {
-            const res = await fetch('http://localhost:4000/crearUsuario',{
-                method:'POST',
+        const id = sessionStorage.getItem('id_usuario');
+        const confirmar = window.confirm("¿Desea actualizar el usuario? será redirigido al LOGIN")
+        if(confirmar && id){
+            try {
+            const res = await fetch(`http://localhost:4000/actUsuario/${id}`,{
+                method:'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     username:data.username,
@@ -22,18 +57,21 @@ export const Formulario =()=>{
             if (!res.ok) {
             // Si el estado no es OK (2xx), lanzar un error con el mensaje de la API
             const errorData = await res.json(); // Intentar obtener el mensaje de error del cuerpo
-            throw new Error(errorData.message || 'Error al crear el usuario'); // Usar un mensaje genérico si no hay uno específico
+            throw new Error(errorData.message || 'Error al actualizar el usuario'); // Usar un mensaje genérico si no hay uno específico
             }  
             navigate('/');
-        } catch (error) {
-            alert(error.message)
+            } catch (error) {
+                alert(error.message)
+            }
         }
         
+        
     })
+
     return(
         <div>
             <div>
-                <h2>Registro de usuarios</h2>
+                <h2>Información de Usuario</h2>
             </div>
             
             <form onSubmit={onSubmit}>
@@ -55,6 +93,7 @@ export const Formulario =()=>{
                                 message: "usuario debe tener máximo 16 caracteres"
                             }
                         })}
+                        
                     />
                     {
                         errors.usuario && <span> {errors.usuario.message}</span>
@@ -79,6 +118,7 @@ export const Formulario =()=>{
                                 message: "contraseña debe tener máximo 16 caracteres"
                             }
                         })}
+
                     />
                     {
                         errors.contrasena && <span> {errors.contrasena.message}</span>

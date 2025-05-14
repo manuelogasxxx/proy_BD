@@ -77,7 +77,22 @@ const verTipoInst= async(req,res,next)=>{
     }
 }
 
+//función para borrar una institucion
+const borrarInstitucion = async (req,res,next)=>{
+    try {
+        const {id_institucion} = req.params;
+        const result= await pool.query('DELETE FROM instituciones WHERE id_institucion=$1',[id_institucion]);
+        if(result.rowCount===0){
+            return res.status(404).json({message:"Usuario no encontrado"});
+        }
+        //todo fue bien y el servidor no regresa nada
+        return res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 module.exports = {
-    crearInst,verInstUser,verTipoInst
-};
+    crearInst,verInstUser,verTipoInst,borrarInstitucion
+};s
