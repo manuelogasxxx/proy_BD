@@ -8,7 +8,7 @@ export const Instituciones=()=>{
     <div>
         
         <header>
-            <Link to="instituciones">Home</Link>
+            <Link to="/inicio">Home</Link>
             <Link to ="crearInstitucion">CrearInstitucion</Link>  
         </header>
         <div>
