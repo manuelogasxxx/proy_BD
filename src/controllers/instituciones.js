@@ -95,4 +95,4 @@ const borrarInstitucion = async (req,res,next)=>{
 
 module.exports = {
     crearInst,verInstUser,verTipoInst,borrarInstitucion
-};s
+};
