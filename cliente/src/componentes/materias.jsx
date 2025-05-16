@@ -36,6 +36,7 @@ export const Materias =()=>{
                 <button>crear Materia</button>
                 <Link to ="alumnos">CrearInstitucion</Link>
             </header>
+            <h1>Lista de materias</h1>
             <div>
                 <table border="1">
                     <thead>

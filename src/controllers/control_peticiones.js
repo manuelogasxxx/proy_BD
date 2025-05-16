@@ -7,7 +7,7 @@ const pool = require('../config/db')
 //método post
 const crearUsuario = async (req,res,next)=>{
     const {username,contrasena,nombre, apellido_pat, apellido_mat} = req.body
-console.log('Datos recibidos:', { username, contrasena, nombre, apellido_pat, apellido_mat });
+    console.log('Datos recibidos:', { username, contrasena, nombre, apellido_pat, apellido_mat });
     try {
         const result = await pool.query(
         "INSERT INTO usuarios (username,contrasena,nombre,apellido_p, apellido_m) VALUES ($1,$2,$3,$4,$5) RETURNING*",
@@ -44,12 +44,17 @@ const loginUsuario= async(req,res,next)=>{
     try {
         const{ username, contrasena} = req.body;
         const result = await pool.query(
-            'SELECT * FROM usuarios WHERE username=$1 AND contrasena=$2',
+            'SELECT id_usuario, username FROM usuarios WHERE username=$1 AND contrasena=$2',
             [username,contrasena]
         );
         if(result.rows.length ===0){
             return res.status(401).json({message:"credenciales inválidas"})
         }
+        const usuario=result.rows[0];
+        await pool.query(
+            'UPDATE usuarios SET ultimo_login = NOW() WHERE id_usuario = $1',
+            [usuario.id_usuario]
+        );
         res.json({ message: 'Inicio de sesión exitoso', user: result.rows[0] }); 
     } catch (error) {
         next(error);
@@ -62,7 +67,7 @@ const loginUsuario= async(req,res,next)=>{
 const verUsuario= async(req,res,next)=>{
     try {
         const{id} = req.params;
-        const result = await pool.query('SELECT * FROM usuarios WHERE id_usuario=$1',[id]);
+        const result = await pool.query('SELECT username, contrasena, nombre, apellido_p,apellido_m,ultimo_login FROM usuarios WHERE id_usuario=$1',[id]);
         
         if(result.rows.length ===0){
             return res.status(404).json({message:"usuario no encontrado"})

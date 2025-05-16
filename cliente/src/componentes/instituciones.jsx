@@ -60,21 +60,20 @@ export const Instituciones=()=>{
 
     return(
     <div>
-        
+        <h1>Panel de Instituciones</h1>
         <header>
             <Link to="/inicio">Home</Link>
             <Link to ="crearInstitucion">CrearInstitucion</Link>  
         </header>
 
         <div>
-            <h2>Lista de Instituciones
-            </h2>
+            <h3>Lista de Instituciones</h3>
             <table border="1">
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>tipo</th>
+                    <th>Tipo</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>

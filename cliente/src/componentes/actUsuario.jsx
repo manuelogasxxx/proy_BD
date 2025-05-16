@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import {useForm} from "react-hook-form";
 import styles from '../formularios.module.css'
 import { useNavigate } from "react-router-dom";
@@ -7,7 +9,8 @@ export const VerUsuario =()=>{
     const {register, handleSubmit,formState:{errors},watch,setValue} = useForm();
     const [usuarioAPI, setUsuarioAPI] = useState([]);
     const [cargandoOpciones, setCargandoOpciones] = useState(true);
-
+    const [ultimoLogin, setUltimoLogin] = useState(null);
+    let ultimo_login='';
     useEffect(() => {
         const id = sessionStorage.getItem('id_usuario');
         const cargarOpciones = async () => {
@@ -25,6 +28,7 @@ export const VerUsuario =()=>{
             setValue('nombre', datos.nombre);
             setValue('apellido_pat', datos.apellido_p);
             setValue('apellido_mat', datos.apellido_m);
+            setUltimoLogin(datos.ultimo_login);
             console.log(datos)
           } catch (error) {
             console.error("Error al cargar las opciones de la API:", error);
@@ -55,11 +59,12 @@ export const VerUsuario =()=>{
                 })
             });
             if (!res.ok) {
-            // Si el estado no es OK (2xx), lanzar un error con el mensaje de la API
-            const errorData = await res.json(); // Intentar obtener el mensaje de error del cuerpo
-            throw new Error(errorData.message || 'Error al actualizar el usuario'); // Usar un mensaje genérico si no hay uno específico
-            }  
-            navigate('/');
+                // Si el estado no es OK (2xx), lanzar un error con el mensaje de la API
+                const errorData = await res.json(); // Intentar obtener el mensaje de error del cuerpo
+                throw new Error(errorData.message || 'Error al actualizar el usuario'); // Usar un mensaje genérico si no hay uno específico
+            }
+                sessionStorage.clear();
+                navigate('/');
             } catch (error) {
                 alert(error.message)
             }
@@ -73,10 +78,11 @@ export const VerUsuario =()=>{
             <div>
                 <h2>Información de Usuario</h2>
             </div>
+            <label>Ultimo login: { format(ultimoLogin, 'dd \'de\' MMMM \'de\' yyyy \'a las\' HH:mm:ss', { locale: es })} </label>
             
             <form onSubmit={onSubmit}>
                 <div>
-                    <label htmlFor="usuario">usuario</label>
+                    <label htmlFor="usuario" className={styles.pruebita}>usuario</label>
                     <input 
                         type="text"
                         {...register("username",{
@@ -101,7 +107,7 @@ export const VerUsuario =()=>{
                 </div>
                 
                 <div>
-                    <label htmlFor="contrasena">contraseña</label>
+                    <label htmlFor="contrasena" className={styles.pruebita}>contraseña</label>
                     <input 
                         type="password"
                         {...register("contrasena",{
@@ -126,7 +132,7 @@ export const VerUsuario =()=>{
                 </div>
                 
                 <div>
-                    <label htmlFor="confirmarContraseña">Confirmar contraseña</label>
+                    <label htmlFor="confirmarContraseña" className={styles.pruebita}>Confirmar contraseña</label>
                     <input 
                         type="password"
                         {...register("confirmarContrasena",{
@@ -178,7 +184,7 @@ export const VerUsuario =()=>{
                     errors.nombre && <span> {errors.nombre.message}</span>
                 }
                 
-                <label htmlFor="apellido_pat">Apellido paterno</label>
+                <label htmlFor="apellido_pat" className={styles.pruebita}>Apellido paterno</label>
                 <input 
                     type="text"
                     {...register("apellido_pat",{
@@ -196,7 +202,7 @@ export const VerUsuario =()=>{
                     errors.apellido_p && <span> {errors.apellido_p.message}</span>
                 }
 
-                <label htmlFor="apellido_mat">Apellido materno</label>
+                <label htmlFor="apellido_mat" className={styles.pruebita}>Apellido materno</label>
                 <input 
                     type="text"
                     {...register("apellido_mat",{
@@ -210,8 +216,8 @@ export const VerUsuario =()=>{
                     errors.apellido_m && <span> {errors.apellido_m.message}</span>
                 }
 
-                <button type= "submit">
-                    Enviar
+                <button type= "submit" className={styles.pruebita}>
+                    Actualizar Datos
                 </button>
                 
             </form>

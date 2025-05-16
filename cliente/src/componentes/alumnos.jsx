@@ -3,13 +3,21 @@ import {useForm} from "react-hook-form";
 import styles from '../formularios.module.css'
 import { useNavigate } from "react-router-dom";
 export const Alumnos =()=>{
+    const navigate = useNavigate();
+
+
+    //funciones para los botones
+    const crearAlumno=()=>{
+        navigate("crearAlumno");
+    }
+
     return(
         <div>
             <h1>Este es el componente para los alumnos</h1>
             <div>
                 <h3>Operaciones generales</h3>
                 <header>
-                    <button>Crear Alumno</button>
+                    <button onClick={()=>crearAlumno()}>Crear Alumno</button>
                     <button> pruebitas</button>
                 </header>
             </div>
@@ -28,7 +36,6 @@ export const Alumnos =()=>{
                             <th>Apellido P</th>
                             <th>Apellido M</th>
                         </tr>
-
                     </thead>
                     <tbody>
 
@@ -81,7 +88,28 @@ export const CrearAlumno=()=>{
             </div>
 
             <form>
-
+                <label htmlFor="usuario">usuario</label>
+                    <input 
+                        type="text"
+                        {...register("username",{
+                            required:{
+                                value: true,
+                                message: "usuario es requerido"
+                            },
+                            minLength:{
+                                value: 4,
+                                message: "usuario debe tener al menos 4 caracteres"
+                            },
+                            maxLength:{
+                                value: 16,
+                                message: "usuario debe tener máximo 16 caracteres"
+                            }
+                        })}
+                    />
+                    {
+                        errors.usuario && <span> {errors.usuario.message}</span>
+                    }
+                
             </form>
         </div>
     )

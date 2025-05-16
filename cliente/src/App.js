@@ -8,7 +8,7 @@ import { Instituciones } from './componentes/instituciones'
 import { Layout,Layout1 } from './componentes/layout'
 import { NavigationBar } from './componentes/Navbar'
 import { Materias } from './componentes/materias'
-import { Alumnos } from './componentes/alumnos'
+import { Alumnos,CrearAlumno } from './componentes/alumnos'
 
 //existen rutas normales y rutas anidadas
 export default function App(){
@@ -32,7 +32,14 @@ export default function App(){
             </RutaProtegida>
           }>
             <Route index element ={<Materias/>}/>
-            <Route path="alumnos" element={<Alumnos/>}/>
+            <Route path="alumnos" element={
+              <RutaProtegida>
+                < Layout1/>
+              </RutaProtegida>
+            }>
+                <Route index element={<Alumnos/>}/>
+                <Route path="crearAlumno" element={<CrearAlumno/>}/>
+            </Route>
           </Route>
         </Route>
       </Routes>
