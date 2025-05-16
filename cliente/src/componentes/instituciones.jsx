@@ -42,7 +42,6 @@ export const Instituciones=()=>{
       const verMaterias =(id_institucion)=>{
         sessionStorage.setItem('id_institucion',id_institucion);
         navigate("materias");
-
       }
 
       const borrarMateria= async (id_institucion)=>{
@@ -66,7 +65,7 @@ export const Instituciones=()=>{
             <Link to="/inicio">Home</Link>
             <Link to ="crearInstitucion">CrearInstitucion</Link>  
         </header>
-        
+
         <div>
             <h2>Lista de Instituciones
             </h2>

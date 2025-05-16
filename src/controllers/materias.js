@@ -56,7 +56,7 @@ const borrarMateria = async (req,res,next)=>{
 const verMaterias= async(req,res,next)=>{
     try {
         const{id_usuario} = req.params;
-        const {rows} = await pool.query('SELECT m.nombre_materia,m.periodo,m.activa FROM materias m JOIN instituciones i ON m.fk_institucion =i.id_institucion JOIN usuarios_instituciones ui ON i.id_institucion = ui.id_institucion WHERE ui.id_usuario=$1',
+        const {rows} = await pool.query('SELECT m.id_materia,m.nombre_materia,m.periodo,m.activa FROM materias m JOIN instituciones i ON m.fk_institucion =i.id_institucion JOIN usuarios_instituciones ui ON i.id_institucion = ui.id_institucion WHERE ui.id_usuario=$1',
             [id_usuario]);
         
         if(rows.length ===0){

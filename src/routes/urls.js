@@ -24,9 +24,9 @@ router.delete('/borrarInst/:id_institucion',borrarInstitucion);
 
 
 //CRUD de materias
-router.post('/crearMat/:id_inst',crearMateria)
-router.put('/actMat/:id_materia',actMateria)
-router.delete('/borrarMat/:id_materia',borrarMateria)
+router.post('/crearMateria/:id_inst',crearMateria)
+router.put('/actMateria/:id_materia',actMateria)
+router.delete('/borrarMateria/:id_materia',borrarMateria)
 router.get('/verMaterias/:id_usuario',verMaterias)
 router.get('/verMateria/:id_materia',verMateria)
 //solicitudes del backend
