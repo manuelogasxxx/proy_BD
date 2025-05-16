@@ -12,3 +12,13 @@ export const Layout=()=> {
     </div>
   );
 }
+
+export const Layout1=()=> {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <main>
+        <Outlet />
+      </main>
+    </div>
+  );
+}

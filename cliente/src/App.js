@@ -5,9 +5,10 @@ import { FormularioInstitucion } from './componentes/crearInstitucion'
 import { VerUsuario } from './componentes/actUsuario'
 import {Login} from './componentes/login1'
 import { Instituciones } from './componentes/instituciones'
-import { Layout } from './componentes/layout'
+import { Layout,Layout1 } from './componentes/layout'
 import { NavigationBar } from './componentes/Navbar'
 import { Materias } from './componentes/materias'
+import { Alumnos } from './componentes/alumnos'
 
 //existen rutas normales y rutas anidadas
 export default function App(){
@@ -25,7 +26,14 @@ export default function App(){
           <Route path="instituciones" element={<Instituciones/>}/>
           <Route path="Usuario"  element={<VerUsuario/>}/>
           <Route path="crearInstitucion" element={<FormularioInstitucion/>}/>
-          <Route path="materias" element={<Materias/>}/>
+          <Route path="materias" element={
+            <RutaProtegida>
+              < Layout1/>
+            </RutaProtegida>
+          }>
+            <Route index element ={<Materias/>}/>
+            <Route path="alumnos" element={<Alumnos/>}/>
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

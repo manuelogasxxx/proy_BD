@@ -1,9 +1,17 @@
+import { Link } from "react-router-dom"
 import { useEffect,useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Materias =()=>{
     const [materiasAPI,setMateriasAPI]=useState([]);
     const id_usuario= sessionStorage.getItem('id_usuario');
     const id_institucion=sessionStorage.getItem('id_institucion');
+    const navigate = useNavigate();
+
+    const verAlumnos =(id_materia)=>{
+        sessionStorage.setItem('id_materia',id_materia);
+        navigate("alumnos");
+    }
     
     useEffect(()=>{
         const cargarMaterias = async()=>{
@@ -23,12 +31,12 @@ export const Materias =()=>{
     },[])
     return(
         <div>
-            Esta es la página de materias
+            <h1>Panel de Materias </h1>
             <header>
                 <button>crear Materia</button>
+                <Link to ="alumnos">CrearInstitucion</Link>
             </header>
             <div>
-                <h2>Lista de materias</h2>
                 <table border="1">
                     <thead>
                         <tr>
@@ -46,7 +54,7 @@ export const Materias =()=>{
                                     <td>{materia.nombre_materia}</td>
                                     <td>{materia.periodo}</td>
                                     <td>
-                                        <button>Ver Alumnos</button>
+                                        <button onClick={()=>verAlumnos(materia.id_materia)}>Ver Alumnos</button>
                                         <button>Borrar</button>
                                     </td>
                                 
