@@ -8,6 +8,7 @@ import { Instituciones } from './componentes/instituciones'
 import { Layout,Layout1 } from './componentes/layout'
 import { NavigationBar } from './componentes/Navbar'
 import { Materias } from './componentes/materias'
+import { CrearMaterias } from './componentes/crearMateria'
 import { Alumnos,CrearAlumno } from './componentes/alumnos'
 
 //existen rutas normales y rutas anidadas
@@ -32,6 +33,7 @@ export default function App(){
             </RutaProtegida>
           }>
             <Route index element ={<Materias/>}/>
+            <Route path= "crearMaterias" element={<CrearMaterias/>}/>
             <Route path="alumnos" element={
               <RutaProtegida>
                 < Layout1/>

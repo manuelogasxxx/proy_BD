@@ -41,6 +41,7 @@ export const Instituciones=()=>{
 
       const verMaterias =(id_institucion)=>{
         sessionStorage.setItem('id_institucion',id_institucion);
+        console.log(sessionStorage.getItem('id_institucion'))
         navigate("materias");
       }
 

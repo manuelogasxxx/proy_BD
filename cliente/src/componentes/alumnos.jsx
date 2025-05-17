@@ -4,7 +4,7 @@ import styles from '../formularios.module.css'
 import { useNavigate } from "react-router-dom";
 export const Alumnos =()=>{
     const navigate = useNavigate();
-
+    const {register, handleSubmit,formState:{errors},watch} = useForm();
 
     //funciones para los botones
     const crearAlumno=()=>{

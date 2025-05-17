@@ -2,12 +2,16 @@ const pool = require('../config/db');
 
 const crearMateria = async(req,res,next)=>{
     const{id_inst} = req.params;
-    const {nombre_materia,periodo,fk_institucion} = req.body;
+    const {nombre_materia,periodo,activa} = req.body;
     try {
         const result = await pool.query(
-        "INSERT INTO materias (nombre_materia, periodo, fk_institucion) VALUES ($1,$2,$3) RETURNING*",
-        [nombre_materia,periodo,id_inst]
+        "INSERT INTO materias (nombre_materia, periodo, fk_institucion, activa) VALUES ($1,$2,$3,$4) RETURNING*",
+        [nombre_materia,periodo,id_inst,activa]
         );
+        if(result.rows.length===0){
+            //error específico
+            return res.status(404).json({message:"error al crear la materia"});
+        }
         await pool.query('COMMIT');
         res.status(201).json({message: "Materia creada correctamente",
                             materiaCreada: result.rows[0]});    
@@ -56,8 +60,24 @@ const borrarMateria = async (req,res,next)=>{
 const verMaterias= async(req,res,next)=>{
     try {
         const{id_usuario} = req.params;
-        const {rows} = await pool.query('SELECT m.id_materia,m.nombre_materia,m.periodo,m.activa FROM materias m JOIN instituciones i ON m.fk_institucion =i.id_institucion JOIN usuarios_instituciones ui ON i.id_institucion = ui.id_institucion WHERE ui.id_usuario=$1',
-            [id_usuario]);
+        const { activa } = req.query; // Obtener el parámetro de consulta 'activa'
+
+        let query = `
+            SELECT m.id_materia, m.nombre_materia, m.periodo, m.activa
+            FROM materias m
+            JOIN instituciones i ON m.fk_institucion = i.id_institucion
+            JOIN usuarios_instituciones ui ON i.id_institucion = ui.id_institucion
+            WHERE ui.id_usuario = $1
+        `;
+        const values = [id_usuario];
+
+        if (activa === 'true') {
+            query += ' AND m.activa = TRUE';
+        } else if (activa === 'false') {
+            query += ' AND m.activa = FALSE';
+        }
+
+        const { rows } = await pool.query(query, values);
         
         if(rows.length ===0){
             return res.status(404).json({message:"materias no encontradas"})

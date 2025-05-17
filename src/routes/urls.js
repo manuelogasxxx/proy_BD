@@ -31,5 +31,6 @@ router.get('/verMaterias/:id_usuario',verMaterias)
 router.get('/verMateria/:id_materia',verMateria)
 //solicitudes del backend
 
+//CRUD de alumnos
 
 module.exports = router;
