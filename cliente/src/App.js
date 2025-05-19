@@ -10,6 +10,7 @@ import { NavigationBar } from './componentes/Navbar'
 import { Materias } from './componentes/materias'
 import { CrearMaterias } from './componentes/crearMateria'
 import { Alumnos,CrearAlumno } from './componentes/alumnos'
+import { Asistencias } from './componentes/alumnosAsistencias'
 
 //existen rutas normales y rutas anidadas
 export default function App(){
@@ -41,6 +42,7 @@ export default function App(){
             }>
                 <Route index element={<Alumnos/>}/>
                 <Route path="crearAlumno" element={<CrearAlumno/>}/>
+                <Route path="asistencias" element={<Asistencias/>}/>
             </Route>
           </Route>
         </Route>

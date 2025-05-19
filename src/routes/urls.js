@@ -3,6 +3,8 @@ const {loginUsuario,crearUsuario,actUsuario,verUsuario,borrarUsuario,crearInstit
 const {crearInst,verInstUser,verTipoInst,borrarInstitucion} = require('../controllers/instituciones');
 const {crearMateria,borrarMateria,actMateria,verMaterias,verMateria} = require('../controllers/materias');
 const {crearAlumno,obtenerAlumnosInscritos} = require('../controllers/alumnos');
+const {contarSesionesClase,obtenerEstadisticasAsistenciaPorMateria,verDetalleMateria}= require('../controllers/asistencias') 
+
 const router = Router();
 
 
@@ -35,5 +37,11 @@ router.get('/verMateria/:id_materia',verMateria)
 router.post('/crearAlumno/:id_inst/:id_materia',crearAlumno)
 router.get('/verAlumnosInscritos/:id_materia/:genero',obtenerAlumnosInscritos)
 
+//peticiones para asistencia
+router.get('/contarSesionesClase/:id_materia',contarSesionesClase);
+router.get('/estadisticasAsistencia/:id_materia',obtenerEstadisticasAsistenciaPorMateria);
 
+
+//ver detalles materia.
+router.get('/verDetallesMateria/:id_materia/:id_usuario',verDetalleMateria)
 module.exports = router;

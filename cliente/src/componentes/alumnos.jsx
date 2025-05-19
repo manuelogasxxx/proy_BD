@@ -1,24 +1,64 @@
 //este es el panel de Alumnos
 import {useForm} from "react-hook-form";
 import styles from '../formularios.module.css'
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 export const Alumnos =()=>{
     const navigate = useNavigate();
     const {register, handleSubmit,formState:{errors},watch} = useForm();
-
+    const [alumnosAPI, setAlumnosAPI] = useState([]); //estado para cargar las materias
+    const [isActivoToggleHombre, setIsActivoToggleHombre] = useState(true);
+    const [isActivoToggleMujer, setIsActivoToggleMujer] = useState(true); 
+    const id_materia = sessionStorage.getItem('id_materia');
     //funciones para los botones
     const crearAlumno=()=>{
-        navigate("crearAlumno");
+        navigate("asistencias");
     }
+
+    useEffect(() => {
+        const cargarMaterias = async () => {
+            console.log(id_materia)
+            let genero='';
+            if(isActivoToggleHombre && isActivoToggleMujer) genero='T';
+            else{
+                if(isActivoToggleHombre) genero='H';
+                if(isActivoToggleMujer) genero='M';
+            }
+            if(!isActivoToggleHombre && !isActivoToggleMujer){
+                setIsActivoToggleHombre(true);
+                setIsActivoToggleMujer(true);
+                genero='T';
+                //poner una ventanita
+            }
+            try {
+                let url = `http://localhost:4000/verAlumnosInscritos/${id_materia}/${genero}`;
+
+                const respuesta = await fetch(url,{
+                    method: 'GET',
+                });
+
+                if (!respuesta.ok) {
+                    
+                    throw new Error(`Error al cargar las opciones: ${respuesta.status}`);
+                }
+                const datos = await respuesta.json();
+                setAlumnosAPI(datos);
+                console.log(datos)
+            } catch (error) {
+                console.error(error.message)
+            }
+        };
+        cargarMaterias();
+    }, [isActivoToggleHombre,isActivoToggleMujer])
 
     return(
         <div>
-            <h1>Este es el componente para los alumnos</h1>
+            <h1>Panel de Alumnos</h1>
             <div>
                 <h3>Operaciones generales</h3>
                 <header>
-                    <button onClick={()=>crearAlumno()}>Crear Alumno</button>
-                    <button> pruebitas</button>
+                    <button onClick={()=>crearAlumno()}>Resumen de Asistencias</button>
+                    <button> Resumen de calificaciones</button>
                 </header>
             </div>
             <div>
@@ -27,18 +67,51 @@ export const Alumnos =()=>{
                     <button>Crear Alumno</button>
                     <button> pruebitas</button>
                 </header>
+                <label>Mostrar Hombres
+                    <input
+                        type="checkbox"
+                        checked={isActivoToggleHombre}
+                        onChange={(e) => setIsActivoToggleHombre(e.target.checked)}
+                    />
+                </label>
+
+                <label>Mostrar Mujeres
+                    <input
+                        type="checkbox"
+                        checked={isActivoToggleMujer}
+                        onChange={(e) => setIsActivoToggleMujer(e.target.checked)}
+                    />
+                </label>
             </div>
             <div>
-                <table>
+                <table border="1">
                     <thead>
                         <tr>
                             <th>Nombre</th>
                             <th>Apellido P</th>
                             <th>Apellido M</th>
+                            <th>genero</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {
+                            alumnosAPI.map((alumno) => (
+                                <tr key={alumno.id_alumno}>
+                                    <td>{alumno.nombre_alumno}</td>
+                                    <td>{alumno.apellido_p_alumno}</td>
+                                    <td>{alumno.apellido_m_alumno}</td>
+                                    <td>{alumno.gen}</td>
+                                 
+                                    <td>
+                                        <button >Ver Alumnos</button>
+                                        <button >Borrar</button>
+                                        
+                                    </td>
 
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>
