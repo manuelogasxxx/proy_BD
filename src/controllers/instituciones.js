@@ -46,15 +46,17 @@ const verInst= async(req,res,next)=>{
 }
 
 //ver todas las instituciones asociadas a un usuario
+//Se corrigió esta consulta
 const verInstUser= async(req,res,next)=>{
     try {
         const{id_usuario} = req.params;
         const {rows} = await pool.query('SELECT i.id_institucion,i.nombre_institucion, ti.nombre FROM instituciones i JOIN usuarios_instituciones ui ON i.id_institucion = ui.id_institucion JOIN tipo_institucion ti ON i.fk_tipo_institucion = ti.id_tipo_institucion WHERE ui.id_usuario = $1',
             [id_usuario]);
         
-        if(rows.length ===0){
+        //si no encuentra instituciones no necesariamente está mal
+        /*if(rows.length ===0){
             return res.status(404).json({message:"institucion  no encontrado"})
-        }
+        }*/
         res.json(rows);
     } catch (error) {
         next(error);

@@ -12,16 +12,16 @@ const router = Router();
 router.post('/login',loginUsuario) //probado (2 consultas)
 
 //CRUD Usuarios
-router.post('/crearUsuario', crearUsuario)
+router.post('/crearUsuario', crearUsuario) //probado (1 consulta)
 router.put('/actUsuario/:id',actUsuario) //probado (1 consulta)
 router.get('/verUsuario/:id',verUsuario) //probado (1 consulta)
-router.delete('/borrarUsuario/:id',borrarUsuario)
+router.delete('/borrarUsuario/:id',borrarUsuario) //probado (1 consulta)
 
 //CRUD instituciones
-router.post('/crearInst/:id_usuario',crearInst)
-router.get('/verInst/:id_usuario', verInstUser)
-router.get('/verTipoInst',verTipoInst)
-router.delete('/borrarInst/:id_institucion',borrarInstitucion);
+router.post('/crearInst/:id_usuario',crearInst)// probado (1 consulta)
+router.get('/verInst/:id_usuario', verInstUser)//probado (1 consulta)
+router.get('/verTipoInst',verTipoInst)//probado (1 consulta)
+router.delete('/borrarInst/:id_institucion',borrarInstitucion); //probado (1 consulta)
 
 
 
