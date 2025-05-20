@@ -9,13 +9,13 @@ const router = Router();
 
 
 //login
-router.post('/login',loginUsuario)
+router.post('/login',loginUsuario) //probado (2 consultas)
 
 //CRUD Usuarios
 router.post('/crearUsuario', crearUsuario)
-router.put('/actUsuario/:id',actUsuario)
-router.get('/verUsuario/:id',verUsuario)
-router.delete('/pruebita3/:id',borrarUsuario)
+router.put('/actUsuario/:id',actUsuario) //probado (1 consulta)
+router.get('/verUsuario/:id',verUsuario) //probado (1 consulta)
+router.delete('/borrarUsuario/:id',borrarUsuario)
 
 //CRUD instituciones
 router.post('/crearInst/:id_usuario',crearInst)

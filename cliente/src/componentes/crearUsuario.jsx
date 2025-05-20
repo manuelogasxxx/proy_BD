@@ -15,15 +15,16 @@ export const Formulario =()=>{
                     username:data.username,
                     contrasena: data.contrasena,
                     nombre:data.nombre,
-                    apellido_pat:data.apellido_pat,
-                    apellido_mat:data.apellido_mat
+                    apellido_p:data.apellido_p,
+                    apellido_m:data.apellido_m
                 })
             });
             if (!res.ok) {
             // Si el estado no es OK (2xx), lanzar un error con el mensaje de la API
-            const errorData = await res.json(); // Intentar obtener el mensaje de error del cuerpo
-            throw new Error(errorData.message || 'Error al crear el usuario'); // Usar un mensaje genérico si no hay uno específico
-            }  
+                const errorData = await res.json(); // Intentar obtener el mensaje de error del cuerpo
+                throw new Error(errorData.message || 'Error al crear el usuario'); // Usar un mensaje genérico si no hay uno específico
+            }
+            alert("Usuario creado exitosamente.");  
             navigate('/');
         } catch (error) {
             alert(error.message)
@@ -38,7 +39,7 @@ export const Formulario =()=>{
             
             <form onSubmit={onSubmit}>
                 <div>
-                    <label htmlFor="usuario">usuario</label>
+                    <label htmlFor="usuario" className={styles.pruebita}>usuario </label>
                     <input 
                         type="text"
                         {...register("username",{
@@ -62,7 +63,7 @@ export const Formulario =()=>{
                 </div>
                 
                 <div>
-                    <label htmlFor="contrasena">contraseña</label>
+                    <label htmlFor="contrasena" className={styles.pruebita}>contraseña</label>
                     <input 
                         type="password"
                         {...register("contrasena",{
@@ -86,7 +87,7 @@ export const Formulario =()=>{
                 </div>
                 
                 <div>
-                    <label htmlFor="confirmarContraseña">Confirmar contraseña</label>
+                    <label htmlFor="confirmarContraseña" className={styles.pruebita}>Confirmar contraseña</label>
                     <input 
                         type="password"
                         {...register("confirmarContrasena",{
@@ -116,10 +117,7 @@ export const Formulario =()=>{
                         errors.confirmarContrasena && <span> {errors.confirmarContrasena.message}</span>
                     }
                 </div>
-                
-
-                
-
+            
                 <label htmlFor="nombre" className={styles.pruebita}>Nombre</label>
                 <input 
                     type="text"
@@ -138,10 +136,10 @@ export const Formulario =()=>{
                     errors.nombre && <span> {errors.nombre.message}</span>
                 }
                 
-                <label htmlFor="apellido_pat">Apellido paterno</label>
+                <label htmlFor="apellido_p" className={styles.pruebita}>Apellido paterno</label>
                 <input 
                     type="text"
-                    {...register("apellido_pat",{
+                    {...register("apellido_p",{
                         required:{
                             value: true,
                             message: "apellido paterno es requerido"
@@ -156,10 +154,10 @@ export const Formulario =()=>{
                     errors.apellido_p && <span> {errors.apellido_p.message}</span>
                 }
 
-                <label htmlFor="apellido_mat">Apellido materno</label>
+                <label htmlFor="apellido_m" className={styles.pruebita}>Apellido materno</label>
                 <input 
                     type="text"
-                    {...register("apellido_mat",{
+                    {...register("apellido_m",{
                         maxLength:{
                             value: 30,
                             message: "apellido materno debe tener máximo 30 caracteres"
@@ -169,11 +167,9 @@ export const Formulario =()=>{
                 {
                     errors.apellido_m && <span> {errors.apellido_m.message}</span>
                 }
-
-                <button type= "submit">
+                <button type= "submit" className={styles.pruebita}>
                     Enviar
-                </button>
-                
+                </button>               
             </form>
         </div>
     )

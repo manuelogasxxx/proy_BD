@@ -6,12 +6,12 @@ const pool = require('../config/db')
 
 //método post
 const crearUsuario = async (req,res,next)=>{
-    const {username,contrasena,nombre, apellido_pat, apellido_mat} = req.body
-    console.log('Datos recibidos:', { username, contrasena, nombre, apellido_pat, apellido_mat });
+    const {username,contrasena,nombre, apellido_p, apellido_m} = req.body
+    console.log('Datos recibidos:', { username, contrasena, nombre, apellido_p, apellido_m });
     try {
         const result = await pool.query(
         "INSERT INTO usuarios (username,contrasena,nombre,apellido_p, apellido_m) VALUES ($1,$2,$3,$4,$5) RETURNING*",
-        [username,contrasena,nombre, apellido_pat, apellido_mat]
+        [username,contrasena,nombre, apellido_p, apellido_m]
         );
         console.log('Resultado de la consulta:', result.rows[0]);
         res.json(result.rows[0]);    
@@ -23,12 +23,12 @@ const crearUsuario = async (req,res,next)=>{
 //metodo put
 const actUsuario = async (req,res,next)=>{
     const {id} = req.params;
-    const {username,contrasena,nombre, apellido_pat, apellido_mat} = req.body
+    const {username,contrasena,nombre, apellido_p, apellido_m} = req.body
 
     try {
         const result = await pool.query(
         "UPDATE usuarios SET username=$1,contrasena=$2,nombre=$3,apellido_p=$4, apellido_m=$5 WHERE id_usuario=$6  RETURNING*",
-        [username,contrasena,nombre, apellido_pat, apellido_mat,id]
+        [username,contrasena,nombre, apellido_p, apellido_m,id]
         );
         if(result.rows.length ===0){
             return res.status(404).json({message: "Usuario no encontrado"});
