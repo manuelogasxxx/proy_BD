@@ -26,15 +26,15 @@ router.delete('/borrarInst/:id_institucion',borrarInstitucion); //probado (1 con
 
 
 //CRUD de materias
-router.post('/crearMateria/:id_inst',crearMateria)
+router.post('/crearMateria/:id_inst',crearMateria)//probado(1 consulta)
 router.put('/actMateria/:id_materia',actMateria)
-router.delete('/borrarMateria/:id_materia',borrarMateria)
-router.get('/verMaterias/:id_usuario',verMaterias)
+router.delete('/borrarMateria/:id_materia',borrarMateria)//probado (1 consulta)
+router.get('/verMaterias/:id_usuario/:id_inst',verMaterias)//probado (1 consulta)
 router.get('/verMateria/:id_materia',verMateria)
 //solicitudes del backend
 
 //CRUD de alumnos
-router.post('/crearAlumno/:id_inst/:id_materia',crearAlumno)
+router.post('/crearAlumno/:id_inst/:id_materia',crearAlumno) //falta hacer la interfáz
 router.get('/verAlumnosInscritos/:id_materia/:genero',obtenerAlumnosInscritos)
 
 //peticiones para asistencia
@@ -43,5 +43,5 @@ router.get('/estadisticasAsistencia/:id_materia',obtenerEstadisticasAsistenciaPo
 
 
 //ver detalles materia.
-router.get('/verDetallesMateria/:id_materia/:id_usuario',verDetalleMateria)
+router.get('/verDetallesMateria/:id_materia/:id_usuario',verDetalleMateria)// probada (1 consulta)
 module.exports = router;
