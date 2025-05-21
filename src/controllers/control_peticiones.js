@@ -118,8 +118,23 @@ const crearInstitucion = async(req,res,next)=>{
 };
 
 
+//función para ver los géneros
+const verGeneros= async(req,res,next)=>{
+    try {
+        const {rows} = await pool.query('SELECT * FROM generos',
+            );
+        
+        if(rows.length ===0){
+            return res.status(404).json({message:"Géneros no encontrados"})
+        }
+        res.json(rows);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
-    loginUsuario, crearUsuario, actUsuario,verUsuario,borrarUsuario,crearInstitucion
+    loginUsuario, crearUsuario, actUsuario,verUsuario,borrarUsuario,crearInstitucion,verGeneros
 }
 
 

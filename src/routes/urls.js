@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const {loginUsuario,crearUsuario,actUsuario,verUsuario,borrarUsuario,crearInstitucion} = require('../controllers/control_peticiones');
+const {loginUsuario,crearUsuario,actUsuario,verUsuario,borrarUsuario,verGeneros} = require('../controllers/control_peticiones');
 const {crearInst,verInstUser,verTipoInst,borrarInstitucion} = require('../controllers/instituciones');
 const {crearMateria,borrarMateria,actMateria,verMaterias,verMateria} = require('../controllers/materias');
 const {crearAlumno,obtenerAlumnosInscritos} = require('../controllers/alumnos');
@@ -34,8 +34,12 @@ router.get('/verMateria/:id_materia',verMateria)
 //solicitudes del backend
 
 //CRUD de alumnos
-router.post('/crearAlumno/:id_inst/:id_materia',crearAlumno) //falta hacer la interfáz
-router.get('/verAlumnosInscritos/:id_materia/:genero',obtenerAlumnosInscritos)
+router.post('/crearAlumno/:id_inst/:id_materia',crearAlumno) //falta hacer la interfáz (2 consultas)
+router.get('/verAlumnosInscritos/:id_materia/:genero',obtenerAlumnosInscritos) //probado (1 consulta)
+//trabajando en la de borrarAlumno
+
+//peticion insana 
+router.get('/verGeneros',verGeneros); //probado (1 consulta)
 
 //peticiones para asistencia
 router.get('/contarSesionesClase/:id_materia',contarSesionesClase);
