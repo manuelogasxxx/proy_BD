@@ -146,6 +146,64 @@ const verDetalleMateria = async (req, res, next) => {
         next(error);
     }
 };
+
+
+
+//las consultas para pasar lista
+//crear lista
+//petición para ver las asistencias de un alumno incrito a una materia
+const obtenerAsistenciasAlumno = async (req, res, next) => {
+  const { id_alumno, id_materia } = req.params;
+
+  // Query para obtener las asistencias de un alumno en una materia específica
+  let query = `
+    SELECT
+      s.id_sesion,
+      s.fecha,
+      t.descripcion AS tipo_asistencia
+    FROM asistencias a
+    JOIN sesiones_clase s ON a.fk_sesion = s.id_sesion
+    JOIN tipos_lista t ON a.fk_tipo_lista = t.id_tipo_lista
+    WHERE a.fk_alumno = $1
+    AND s.fk_materia = $2
+    ORDER BY s.fecha ASC;  -- Ordenar por fecha de sesión
+  `;
+
+  const values = [id_alumno, id_materia];
+
+  try {
+    const result = await pool.query(query, values);
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const obtenerSesionesMateria = async (req, res, next) => {
+  const { id_materia } = req.params;
+
+  let query = `
+    SELECT
+      s.id_sesion,
+      s.fecha::DATE
+    FROM sesiones_clase s
+    WHERE s.fk_materia = $1
+    ORDER BY s.fecha ASC;  -- Ordenar por fecha de sesión
+  `;
+
+  const values = [id_materia];
+
+  try {
+    const result = await pool.query(query, values);
+    res.json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports={
-    contarSesionesClase,obtenerEstadisticasAsistenciaPorMateria,verDetalleMateria
+    contarSesionesClase,
+    obtenerEstadisticasAsistenciaPorMateria,
+    verDetalleMateria, 
+    obtenerAsistenciasAlumno,
+    obtenerSesionesMateria
 }

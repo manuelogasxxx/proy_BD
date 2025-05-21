@@ -3,7 +3,9 @@ const {loginUsuario,crearUsuario,actUsuario,verUsuario,borrarUsuario,verGeneros}
 const {crearInst,verInstUser,verTipoInst,borrarInstitucion} = require('../controllers/instituciones');
 const {crearMateria,borrarMateria,actMateria,verMaterias,verMateria} = require('../controllers/materias');
 const {crearAlumno,obtenerAlumnosInscritos} = require('../controllers/alumnos');
-const {contarSesionesClase,obtenerEstadisticasAsistenciaPorMateria,verDetalleMateria}= require('../controllers/asistencias') 
+const {contarSesionesClase,obtenerEstadisticasAsistenciaPorMateria,verDetalleMateria,
+        obtenerAsistenciasAlumno,obtenerSesionesMateria
+}= require('../controllers/asistencias') 
 
 const router = Router();
 
@@ -42,9 +44,11 @@ router.get('/verAlumnosInscritos/:id_materia/:genero',obtenerAlumnosInscritos) /
 router.get('/verGeneros',verGeneros); //probado (1 consulta)
 
 //peticiones para asistencia
-router.get('/contarSesionesClase/:id_materia',contarSesionesClase);
-router.get('/estadisticasAsistencia/:id_materia',obtenerEstadisticasAsistenciaPorMateria);
+router.get('/contarSesionesClase/:id_materia',contarSesionesClase); //probado (1 consulta)
+router.get('/estadisticasAsistencia/:id_materia',obtenerEstadisticasAsistenciaPorMateria);//probado (1 consulta)
 
+router.get('/verAsistenciasAlumno/:id_materia/:id_alumno',obtenerAsistenciasAlumno); //probado a medias.
+router.get('/verSesionesMateria/:id_materia',obtenerSesionesMateria) //probado a medias
 
 //ver detalles materia.
 router.get('/verDetallesMateria/:id_materia/:id_usuario',verDetalleMateria)// probada (1 consulta)
