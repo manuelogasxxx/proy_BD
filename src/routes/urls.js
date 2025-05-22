@@ -54,6 +54,6 @@ router.get('/verSesionesMateria/:id_materia',obtenerSesionesMateria) //probado a
 
 //peticiones insanas
 
-router.delete('/borrarSesion/id_sesion',borrarSesion);//aun no está probada
+router.delete('/borrarSesion/:id_sesion',borrarSesion);//aun no está probada
 router.get('/verDetallesMateria/:id_materia/:id_usuario',verDetalleMateria)// probada (1 consulta)
 module.exports = router;

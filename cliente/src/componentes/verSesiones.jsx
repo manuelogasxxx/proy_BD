@@ -43,7 +43,7 @@ export const VerSesiones =()=>{
         if(!confirmar) return;
 
         try {
-            const res = await fetch(`http://localhost:4000/borrarMateria/${idMateria}`, {
+            const res = await fetch(`http://localhost:4000/borrarSesion/${idSesion}`, {
                 method: "DELETE"
             })
             if (!res.ok) {
@@ -204,8 +204,9 @@ export const VerAsistencias =()=>{
                                                     { locale: es }
                                                 )}</td>
                                                 <td>{asistencia.tipo_asistencia}</td>
+                                                
                                                 <td>
-                                                    <button >Borrar</button>
+                                                    <button >Justificar</button>
                                                 </td>
                                             </tr>
                                         ))
