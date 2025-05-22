@@ -21,6 +21,15 @@ export const Alumnos = () => {
         navigate("asistencias");
     }
 
+    const verSesiones=()=>{
+        navigate("verSesiones")
+    }
+
+    const verAsistencias=(idAlumno)=>{
+        navigate("verAsistencias");
+        sessionStorage.setItem('id_alumno',idAlumno);
+    }
+
 
     useEffect(() => {
         //revisar el sessionStorage antes de continuar con la función
@@ -76,7 +85,7 @@ export const Alumnos = () => {
                 <h3>Operaciones generales</h3>
                 <header>
                     <button onClick={()=>crearAlumno()}>Crear Alumno</button>
-                    <button> pruebitas</button>
+                    <button onClick={()=>verSesiones()}> pruebitas</button>
                 </header>
 
             </div>
@@ -125,7 +134,7 @@ export const Alumnos = () => {
                                                 <td>{alumno.gen}</td>
 
                                                 <td>
-                                                    <button >Ver Asistencias</button>
+                                                    <button onClick={()=>verAsistencias(alumno.id_alumno)} >Ver Asistencias</button>
                                                     <button >Borrar</button>
 
                                                 </td>

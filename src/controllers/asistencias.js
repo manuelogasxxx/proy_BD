@@ -200,10 +200,27 @@ const obtenerSesionesMateria = async (req, res, next) => {
     next(error);
   }
 };
+
+const borrarSesion = async (req,res,next)=>{
+    try {
+        const {id_sesion} = req.params;
+        const result= await pool.query('DELETE FROM sesiones_clase WHERE id_sesion=$1',[id_sesion]);
+        if(result.rowCount===0){
+            return res.status(404).json({message:"sesion clase no encontrada"});
+        }
+        //todo fue bien y el servidor no regresa nada
+        return res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+}
+
+//borrar una sesión Clase
 module.exports={
     contarSesionesClase,
     obtenerEstadisticasAsistenciaPorMateria,
     verDetalleMateria, 
     obtenerAsistenciasAlumno,
-    obtenerSesionesMateria
+    obtenerSesionesMateria,
+    borrarSesion
 }

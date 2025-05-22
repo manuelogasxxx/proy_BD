@@ -63,7 +63,9 @@ const crearAlumno = async (req, res, next) => {
     const { nombre, apellido_p, apellido_m, fk_genero} = req.body;
     try {
     const result = await pool.query(
-        'INSERT INTO alumnos (nombre_alumno, apellido_p_alumno, apellido_m_alumno, fk_genero, fk_institucion) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        `INSERT INTO alumnos 
+        (nombre_alumno, apellido_p_alumno, apellido_m_alumno, fk_genero, fk_institucion)
+        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
         [nombre, apellido_p, apellido_m, fk_genero, id_inst]
     );
     const id_alumno= result.rows[0].id_alumno;

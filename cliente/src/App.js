@@ -11,6 +11,7 @@ import { Materias } from './componentes/materias'
 import { CrearMaterias } from './componentes/crearMateria'
 import { Alumnos,CrearAlumno } from './componentes/alumnos'
 import { Asistencias } from './componentes/alumnosAsistencias'
+import { VerSesiones,VerAsistencias } from './componentes/verSesiones'
 
 //existen rutas normales y rutas anidadas
 export default function App(){
@@ -43,6 +44,8 @@ export default function App(){
                 <Route index element={<Alumnos/>}/>
                 <Route path="crearAlumno" element={<CrearAlumno/>}/>
                 <Route path="asistencias" element={<Asistencias/>}/>
+                <Route path="verSesiones" element={<VerSesiones/>}/>
+                <Route path="verAsistencias" element={<VerAsistencias/>}/>
             </Route>
           </Route>
         </Route>

@@ -14,6 +14,7 @@ const crearInst = async(req,res,next)=>{
         [nombre,fk_tipo_institucion]
         );
         //recupera el id de la institución creada
+        
         const id_institucion = result.rows[0].id_institucion;
         //crea la relación
         const result1 = await pool.query(
@@ -50,7 +51,14 @@ const verInst= async(req,res,next)=>{
 const verInstUser= async(req,res,next)=>{
     try {
         const{id_usuario, id_ins} = req.params;
-        const {rows} = await pool.query('SELECT i.id_institucion,i.nombre_institucion, ti.nombre FROM instituciones i JOIN usuarios_instituciones ui ON i.id_institucion = ui.id_institucion JOIN tipo_institucion ti ON i.fk_tipo_institucion = ti.id_tipo_institucion WHERE ui.id_usuario = $1',
+        const {rows} = await pool.query(`SELECT 
+                                        i.id_institucion,
+                                        i.nombre_institucion,
+                                        ti.nombre 
+                                        FROM instituciones i 
+                                        JOIN usuarios_instituciones ui ON i.id_institucion = ui.id_institucion
+                                        JOIN tipo_institucion ti ON i.fk_tipo_institucion = ti.id_tipo_institucion 
+                                        WHERE ui.id_usuario = $1`,
             [id_usuario]);
         
         //si no encuentra instituciones no necesariamente está mal

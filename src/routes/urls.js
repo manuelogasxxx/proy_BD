@@ -4,7 +4,7 @@ const {crearInst,verInstUser,verTipoInst,borrarInstitucion} = require('../contro
 const {crearMateria,borrarMateria,actMateria,verMaterias,verMateria} = require('../controllers/materias');
 const {crearAlumno,obtenerAlumnosInscritos} = require('../controllers/alumnos');
 const {contarSesionesClase,obtenerEstadisticasAsistenciaPorMateria,verDetalleMateria,
-        obtenerAsistenciasAlumno,obtenerSesionesMateria
+        obtenerAsistenciasAlumno,obtenerSesionesMateria,borrarSesion
 }= require('../controllers/asistencias') 
 
 const router = Router();
@@ -51,5 +51,9 @@ router.get('/verAsistenciasAlumno/:id_materia/:id_alumno',obtenerAsistenciasAlum
 router.get('/verSesionesMateria/:id_materia',obtenerSesionesMateria) //probado a medias
 
 //ver detalles materia.
+
+//peticiones insanas
+
+router.delete('/borrarSesion/id_sesion',borrarSesion);//aun no está probada
 router.get('/verDetallesMateria/:id_materia/:id_usuario',verDetalleMateria)// probada (1 consulta)
 module.exports = router;
